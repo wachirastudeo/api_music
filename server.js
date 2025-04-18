@@ -99,7 +99,18 @@ const instruments = [
 ];
 
 app.get('/api/instruments', (req, res) => {
-    res.json(instruments);
+    const { type, brand } = req.query;
+    let results = instruments;
+
+    if (type) {
+        results = results.filter(item => item.type.toLowerCase() === type.toLowerCase());
+    }
+
+    if (brand) {
+        results = results.filter(item => item.brand.toLowerCase() === brand.toLowerCase());
+    }
+
+    res.json(results);
 });
 
 app.get('/api/instrument-types', (req, res) => {
